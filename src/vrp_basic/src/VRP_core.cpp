@@ -19,7 +19,7 @@ void dlog(char *ptr)
 void loadOrders(vrp_orders_t *orders, int order_count, int depotId)
 {
 	int i;
-	sprintf(buff, "%d", depotId);
+	//sprintf(buff, "%d", depotId);
 	//dlog("Depot ID");
 	//dlog(buff);
 	for(i = 0; i < order_count; i++)
