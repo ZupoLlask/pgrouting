@@ -237,7 +237,42 @@ int onetomany_dijkstra_boostdist(edge_t *edges, unsigned int count,
 
                 v_src = path_vect[numTarget].at(i);
                 v_targ = path_vect[numTarget].at(i - 1);
+                //===========
+                double cost = 99999999.9;
+                int edge_id_source = 0;
 
+
+                for (tie(out_i, out_end) = out_edges(v_src, graph); out_i != out_end; ++out_i)
+                {
+
+                    graph_traits < graph_t >::vertex_descriptor v, targ;
+                    e = *out_i;
+                    v = source(e, graph);
+                    targ = target(e, graph);
+
+                    if (targ == v_targ)
+                    {
+                        if (graph[*out_i].cost < cost)
+                        {
+#ifndef PGR_MERGE                        
+                        (*dists)[numTarget].edge_id_target = graph[*out_i].id;
+                            if ((*dists)[numTarget].edge_id_source < 0)
+                                edge_id_source = graph[*out_i].id;      
+#endif
+                            cost = graph[*out_i].cost;
+                            
+                        }
+                       
+                    }
+                }
+#ifndef PGR_MERGE
+                if (edge_id_source > 0)            
+                    (*dists)[numTarget].edge_id_source = edge_id_source;
+#endif
+                (*dists)[numTarget].cost += cost;
+                
+                //========
+                /*  
                 for (tie(out_i, out_end) = out_edges(v_src, graph); out_i != out_end; ++out_i)
                 {
                     graph_traits < graph_t >::vertex_descriptor v, targ;
@@ -257,7 +292,8 @@ int onetomany_dijkstra_boostdist(edge_t *edges, unsigned int count,
 #ifndef PGR_MERGE
                 (*dists)[numTarget].edge_id_target = graph[*out_i].id;
 #endif
-
+                */
+				
             }
             index_of_last_path_vertex = j;
         }
@@ -452,16 +488,16 @@ try {
                 src = source(e, graph);
                 targ = target(e, graph);
 
-                if (targ == v_targ) {
+                if (targ == v_targ and ((*pathdists)[seq].cost > graph[*out_i].cost or (*pathdists)[seq].id3 == -1)){
                     (*pathdists)[seq].seq = seq;
                     (*pathdists)[seq].id1 = id1;
                     (*pathdists)[seq].id2 = src;
                     (*pathdists)[seq].id3 = graph[*out_i].id; 
                     (*pathdists)[seq].cost = graph[*out_i].cost;
-                    seq++;
-                    break;
+
                 }
             }
+            seq++;
         }
         index_of_last_path_vertex = j;
     }
@@ -503,6 +539,10 @@ try {
 
                 v_src = path_vect[numTarget].at(i);
                 v_targ = path_vect[numTarget].at(i - 1);
+                double cost = 99999999.9;
+                char[] edge_id_list = "";
+                int edge_id_source = 0;
+
 
                 for (tie(out_i, out_end) = out_edges(v_src, graph); out_i != out_end; ++out_i)
                 {
@@ -514,16 +554,32 @@ try {
 
                     if (targ == v_targ)
                     {
-                        if ((*pathdists)[numTarget].edge_id_source < 0)
+                        if (graph[*out_i].cost < cost)
+                        {
+                            cost = graph[*out_i].cost;
+                            edge_id_source = graph[*out_i].id;
+                            edge_id_list = toString(graph[*out_i].id);        
+                            (*pathdists)[numTarget].edge_id_target = graph[*out_i].id;                            
+                        }
+                                           
+                        /*if ((*pathdists)[numTarget].edge_id_source < 0)
                             (*pathdists)[numTarget].edge_id_source = graph[*out_i].id;
                         else
                             edgeIDLists[numTarget] += ", ";
                         edgeIDLists[numTarget] += toString(graph[*out_i].id);
                         (*pathdists)[numTarget].cost += graph[*out_i].cost;
                         break;
+                        */
                     }
                 }
-                (*pathdists)[numTarget].edge_id_target = graph[*out_i].id;
+                if ((*pathdists)[numTarget].edge_id_source < 0)
+                    (*pathdists)[numTarget].edge_id_source = edge_id_source
+                else
+                    edgeIDLists[numTarget] += ", ";
+                edgeIDList[numTarget] += edge_id_list;
+
+                (*pathdists)[numTarget].cost += cost;
+
             }
         }
         (*pathdists)[numTarget].the_way = (char*)malloc(sizeof(char) * edgeIDLists[numTarget].size() + 1);
