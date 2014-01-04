@@ -1,5 +1,5 @@
 --
---  A solution to the Asymmetric traveling salesman problem
+--  A solution to the Asymmetric travelling salesman problem
 --  using pgr_tsp.
 --
 --  Solution is to rewrite the distance matrix in to inverse copy and
@@ -10,9 +10,9 @@
 --  
 --  Note entries need not be in the range 1-N but can be 1,2,42,123 etc.
 --
---  DUE to the number of messages generated about temporary tables, chaging the
+--  DUE to the number of messages generated about temporary tables, changing the
 --  default of PGOPTIONS to ='--client-min-messages=warning' will stop a lot
---  of uncessary error messages
+--  of unnecessary error messages
 
 --
 --
@@ -85,7 +85,7 @@ $$
 LANGUAGE 'plpgsql' VOLATILE;
 
 --
--- Make a distance matrix for the traveling salesman  problem
+-- Make a distance matrix for the travelling salesman problem
 --
 -- Input is an sql string that provides source, target and the cost
 -- of getting between them
@@ -131,7 +131,7 @@ BEGIN
 	-- by default populate the return results with zero, so any unknown
 	-- routes will not be listed
 	array_size := orginal_size * 2;
-	-- default entry very expensive ie do not route this way
+	-- default entry very expensive i.e. do not route this way
 	ret_array :=array_fill(9999999,ARRAY	[ array_size,array_size]);
 
 	FOR t in 1..orginal_size LOOP  -- source

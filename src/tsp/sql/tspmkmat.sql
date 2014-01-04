@@ -1,5 +1,5 @@
 --
---  Call the pgroute traveling sales man soultion using an sql string
+--  Call the pgrouting travelling sales man solution using an sql string
 --  instead of a matrix solution.
 --
 --  The input is a sql query that returns a source/target nodes  and cost between, the out put
@@ -10,9 +10,9 @@
 --    Were source && target are any integers and cost is a double
 --
 
---  DUE to the number of messages generated about temporary tables, chaging the
+--  DUE to the number of messages generated about temporary tables, changing the
 --  default of PGOPTIONS to ='--client-min-messages=warning' will stop a lot
---  of uncessary error messages
+--  of unnecessary error messages
 --
 --   version 2.0 Major rewrite to handle asymteric issues.
 
@@ -95,7 +95,7 @@ $$
 LANGUAGE 'plpgsql' VOLATILE;
 
 --
--- Make a distance matrix for the traveling salesman  problem
+-- Make a distance matrix for the travelling salesman problem
 --
 -- Input is an sql string that provides source, target and the cost
 -- of getting between them.
@@ -265,7 +265,7 @@ $$
 LANGUAGE 'plpgsql';
 
 --
--- Lookup a user network conver and convert it to an internal matrix number
+-- Lookup a user network convert and convert it to an internal matrix number
 --
 CREATE or REPLACE FUNCTION pgr_tspname2index(integer) RETURNS integer AS 
 $$

@@ -2,6 +2,8 @@
 LIST(APPEND PACKAGE_SQL_FILES
     ${CMAKE_CURRENT_SOURCE_DIR}/routing_tsp.sql
     ${CMAKE_CURRENT_SOURCE_DIR}/routing_tsp_wrappers.sql
+    ${CMAKE_CURRENT_SOURCE_DIR}/atspmat.sql
+    ${CMAKE_CURRENT_SOURCE_DIR}/tspmkmat.sql
 )
 
 # set in parent scope
