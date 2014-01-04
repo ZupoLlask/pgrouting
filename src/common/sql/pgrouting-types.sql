@@ -27,3 +27,14 @@ CREATE TYPE pgr_geomResult AS
     geom geometry
 );
 
+CREATE TYPE pgr_atsprowtype AS
+(
+	id integer,
+	seq integer
+);
+
+CREATE TYPE pgr_tsprowtype AS
+(
+	id integer,
+	seq integer
+);
